@@ -8,9 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>我的首页</title>
+    <title>我的JSP页面</title>
   </head>
   <body>
-  这是我的首页，我们将在这里进行首页面更改。
+    这是我的JSP页面，这部分信息将会在页面中体现。
+    <script>
+      // redirect to /front/index.jsp file
+      window.location.href = 'front/index.jsp';
+    </script>
   </body>
 </html>

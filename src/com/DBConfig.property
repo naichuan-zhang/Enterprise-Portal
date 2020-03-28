@@ -1,0 +1,12 @@
+#数据库类型:1为MYSQL,默认为1。
+DBType=1
+
+#MySQL 数据库连接信息
+#MySQL 数据库驱动程序
+MySQLDriver=com.mysql.cj.jdbc.Driver
+
+MySQLUsername=root
+MySQLURL=jdbc:mysql://localhost:3306/enterprise_portal
+
+#您还可以继续添加其它的数据库。
+
