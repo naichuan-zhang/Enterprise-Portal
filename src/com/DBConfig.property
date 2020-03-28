@@ -9,4 +9,3 @@ MySQLUsername=root
 MySQLURL=jdbc:mysql://localhost:3306/enterprise_portal
 
 #您还可以继续添加其它的数据库。
-
