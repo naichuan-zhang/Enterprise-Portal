@@ -1,7 +1,9 @@
 package com.naichuan;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * @author : Naichuan Zhang
@@ -104,5 +106,31 @@ public class Function {
         } catch (Exception e) {
         }
         return "分页出错!";
+    }
+
+    public boolean checkLogin(Connection conn, String s1, String s2) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = null;
+        boolean ok = true;
+        int adminID = 0;
+        int adminType = 0;
+        String adminPwd = "";
+        String user = checkReplace(s1);
+        String pwd = checkReplace(s2);
+        String sql = "SELECT * FROM admin WHERE AdminName='" + user + "'";
+        rs = stmt.executeQuery(sql);
+        if (!rs.next()) {
+            ok = false;
+        } else {
+            adminPwd = rs.getString("AdminPwd");
+            if (pwd.equals(adminPwd)) {
+                adminID = rs.getInt("AdminID");
+                adminType = rs.getInt("AdminType");
+                ok = true;
+            } else {
+                ok = false;
+            }
+        }
+        return ok;
     }
 }
