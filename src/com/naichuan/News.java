@@ -50,7 +50,7 @@ public class News {
                                      "<td>" + newsTitle + "</td>" +
                                      "<td>" + adminName + "</td>" +
                                      "<td>" + newsTime + "</td>" +
-                                     "<td><a style='color: #3f862e' target='_blank' href='newsFrontDetails.jsp?id=" + newsId + ">详情</a></td>" +
+                                     "<td><a style='color: #3f862e' target='_blank' href='newsFrontDetails.jsp?newsId=" + newsId + "'>详情</a></td>" +
                                   "</tr>");
                     rs.next();
                     i++;
@@ -66,5 +66,46 @@ public class News {
         }
         // Error occurs
         return "No";
+    }
+
+    public String newsDetails(String sB) {
+        try {
+            Connection conn = dbConn.getConn();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = null;
+            int newsID = func.strToInt(sB);
+            if (newsID == 0) {
+                return "No";
+            } else {
+                try {
+                    String sql = "SELECT * FROM news WHERE NewsID=" + newsID;
+                    rs = stmt.executeQuery(sql);
+                    StringBuffer buffer = new StringBuffer();
+                    int i = 0;
+                    while (i < 1 && !rs.isAfterLast()) {
+                        rs.next();
+                        String newsTitle = rs.getString("NewsTitle");
+                        String newsContent = rs.getString("NewsContent");
+                        String[] content = newsContent.split("#");
+                        buffer.append("<br><h2 style='font-size: 28px; margin-left: 30%;'>" + newsTitle + "</h2>");
+                        for (int j = 0; j < content.length; j++) {
+                            buffer.append("<p>" + content[j] + "</p>");
+                        }
+                        rs.next();
+                        i++;
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                    return buffer.toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "No";
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "No";
+        }
     }
 }

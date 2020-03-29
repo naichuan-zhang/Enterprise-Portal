@@ -35,15 +35,9 @@ public class DBConnection {
 
     public Connection getConnToMySql() {
         try {
-            mysqlDriver = getParam("MySQLDriver");
-            mysqlUrl = getParam("MySQLURL");
-            mysqlUsername = getParam("MySQLUsername");
-            mysqlPassword = "";
-            Class.forName(mysqlDriver).newInstance();
-            conn = DriverManager.getConnection(mysqlUrl, mysqlUsername, mysqlPassword);
-        } catch (SQLException | ClassNotFoundException
-                | IllegalAccessException
-                | InstantiationException e) {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/enterprise_portal", "root", null);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return conn;
