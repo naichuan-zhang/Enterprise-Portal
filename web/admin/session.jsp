@@ -6,11 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<%@ page import="com.naichuan.*" %>
 
-</body>
-</html>
+<%
+    Function func = new Function();
+    boolean isLogin = func.strToBool((String) session.getAttribute("login"));
+    if (!isLogin) {
+        out.println("<script>" +
+                "alert('请重新登录！');" +
+                "location.href = 'login.jsp';" +
+                "</script>");
+    }
+%>
