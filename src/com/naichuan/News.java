@@ -14,6 +14,10 @@ public class News {
     DBConnection dbConn = new DBConnection();
     Function func = new Function();
 
+    public News() {
+
+    }
+
     public String listNewsFront(String sPage, String strPage) {
         try {
             Connection conn = dbConn.getConn();

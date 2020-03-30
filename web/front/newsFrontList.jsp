@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8" import="java.util.*" %>
-<%@ page import="com.naichuan.*" %>
+<%@ page import="com.naichuan.News" %>
 
 <%
     String path = request.getContextPath();

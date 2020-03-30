@@ -17,6 +17,12 @@ public class Login {
 
     }
 
+    /**
+     * check login
+     * @param s1 username
+     * @param s2 password
+     * @return boolean type
+     */
     public boolean loginCheck(String s1, String s2) {
         try {
             Connection conn = dbConn.getConn();
