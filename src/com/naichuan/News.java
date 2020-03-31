@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author : Naichuan Zhang
@@ -32,8 +34,7 @@ public class News {
             int intPageSize = 5;
 
             if (!rs.next()) {
-                buffer.append("" +
-                        "<tr height='25' bgcolor='#d6dff7' class='info1'>" +
+                buffer.append("<tr height='25' bgcolor='#d6dff7' class='info1'>" +
                             "<td colspan='5'>" +
                                 "<div align='center'><b>没有记录！</b></div>" +
                             "</td>" +
@@ -173,6 +174,53 @@ public class News {
         } catch (SQLException e) {
             e.printStackTrace();
             return "No";
+        }
+    }
+
+    public String addNews(String[] s, String adminName, String ip) {
+        try {
+            Connection conn = dbConn.getConn();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = null;
+            String sql = "SELECT * FROM news ORDER BY NewsID DESC";
+            rs = stmt.executeQuery(sql);
+            int z = 0;
+            int newsNum = 0;
+            if (!rs.next()) {
+                newsNum = 1;
+            } else {
+                while (z < 1 && !rs.isAfterLast()) {
+                    int newsID = rs.getInt("NewsID");
+                    newsNum = newsID + 1;
+                    break;
+                }
+            }
+            // NewsTitle
+            s[0] = func.checkReplace(s[0]);
+            // NewsContent
+            s[1] = func.checkReplace(s[1]);
+            // get current datetime
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String newsTime = formatter.format(new Date());
+            StringBuffer sqlAdd = new StringBuffer();
+            sqlAdd.append("INSERT INTO news (NewsID, NewsTitle, NewsContent, NewsTime, AdminName) VALUES " +
+                    "(" + newsNum + ",'" + s[0] + "','" + s[1] + "','" + newsTime + "','" + adminName + "')");
+            try {
+                conn.setAutoCommit(false);
+                stmt.execute(sqlAdd.toString());
+                conn.commit();
+                conn.setAutoCommit(true);
+                stmt.close();
+                conn.close();
+                return "Yes";
+            } catch (Exception e) {
+                conn.rollback();
+                conn.close();
+                return "添加成功";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "添加失败";
         }
     }
 }

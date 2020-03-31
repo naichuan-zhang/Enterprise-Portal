@@ -146,7 +146,7 @@
         <!-- content end -->
     </div>
 
-    <div class="am-popup" id="news-popup">
+    <div class="am-popup" id="new-popup">
         <div class="am-popup-inner">
             <div class="am-popup-hd">
                 <h4 class="am-popup-title">
@@ -154,34 +154,38 @@
                 </h4>
                 <span data-am-modal-close class="am-close">&times;</span>
             </div>
+
             <div class="am-popup-bd">
-                <form class="am-form" id="news-msg" method="post" action="newsAdd.jsp">
+                <form action="newsAdd.jsp" method="post" class="am-form" id="new-msg">
                     <fieldset>
                         <div class="am-form-group">
                             <label for="doc-vld-ta-2-1">
-                                新闻标题
+                                新闻标题：
                             </label>
-                            <input name="NewsTitle" type="text" maxlength="32" placeholder="请输入新闻标题" data-validation-message="不能为空" required>
+                            <input name="NewsTitle" type="text" maxlength="32"
+                                   placeholder="请输入新闻标题" data-validation-message="不能为空" required />
                         </div>
                         <div class="am-form-group">
                             <label for="doc-vld-ta-2-1">
-                                新闻内容
+                                新闻内容：
                             </label>
                             <textarea name="NewsContent" cols="30" rows="10"
-                                      placeholder="请输入新闻内容，段落间请用#分隔。" data-validation-message="不能为空" required>
-                            </textarea>
+                                      placeholder="请输入新闻内容。段落间请用#分隔。" data-validation-message="不能为空" required></textarea>
                         </div>
+
                         <input name="Action" type="hidden" value="Add">
+
                         <button class="am-btn am-btn-secondary" type="submit">
                             提交
                         </button>
-                        <button onclick="javascript:$('#news-popup').modal('close');"
+                        <button onclick='javascript:$("#new-popup").modal("close");'
                                 class="am-btn am-btn-secondary" type="button">
                             关闭
                         </button>
                     </fieldset>
                 </form>
             </div>
+
         </div>
     </div>
 
