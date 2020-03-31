@@ -1,5 +1,6 @@
 package com.naichuan;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -221,6 +222,44 @@ public class News {
         } catch (SQLException e) {
             e.printStackTrace();
             return "添加失败";
+        }
+    }
+
+    public String editNews(String[] s, String newsId, String adminName, String ip) {
+        try {
+            Connection conn = dbConn.getConn();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = null;
+            // upd_NewsTitle
+            s[0] = func.checkReplace(s[0]);
+            // upd_NewContent
+            s[1] = func.checkReplace(s[1]);
+            int id = func.strToInt(newsId);
+            String sql = "UPDATE news SET NewsTitle='" + s[0] + "', NewsContent='"
+                    + s[1] + "' WHERE NewsID=" + id;
+            stmt.executeUpdate(sql);
+            stmt.close();
+            conn.close();
+            return "Yes";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "No";
+        }
+    }
+
+    public String deleteNews(String newsId, String adminName, String ip) {
+        try {
+            Connection conn = dbConn.getConn();
+            Statement stmt = conn.createStatement();
+            int id = func.strToInt(newsId);
+            String sql = "DELETE FROM news WHERE NewsID=" + id;
+            stmt.execute(sql);
+            stmt.close();
+            conn.close();
+            return "Yes";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "No";
         }
     }
 }

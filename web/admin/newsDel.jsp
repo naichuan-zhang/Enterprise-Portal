@@ -6,11 +6,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<%@ page import="com.naichuan.*" %>
 
-</body>
-</html>
+<%
+    request.setCharacterEncoding("UTF-8");
+    String newsId = request.getParameter("NewsID");
+    String adminName = (String) session.getAttribute("adminUser");
+    String ip = request.getRemoteAddr();
+    News news = new News();
+    String sOK = news.deleteNews(newsId, adminName, ip);
+    if (sOK.equalsIgnoreCase("Yes")) {
+        out.print("<script>alert('删除新闻成功!');location.href='news.jsp';</script>");
+    } else {
+        out.print("<script>alert('删除新闻失败!');location.href='news.jsp';</script>");
+    }
+%>
